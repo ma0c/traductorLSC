@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@android:color/darker_gray">
+
+    <LinearLayout
+        android:id="@+id/llDatos1"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="15dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="20dp"
+        android:orientation="vertical" >
+
+        <VideoView
+
+            android:layout_width="350dp"
+            android:layout_height="380dp"
+            android:layout_gravity="center">
+        </VideoView>
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="Palabra a traducir"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="5dp"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
