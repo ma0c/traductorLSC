@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/white">
 
     <LinearLayout
         android:id="@+id/llDatos1"
@@ -18,20 +19,21 @@
         android:orientation="vertical" >
 
         <VideoView
-
+            android:id="@+id/visualizador"
             android:layout_width="350dp"
             android:layout_height="380dp"
             android:layout_gravity="center">
         </VideoView>
 
         <EditText
-            android:id="@+id/etNombre"
+            android:id="@+id/etPalabra"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:hint="Palabra a traducir"
             />
 
         <ImageButton
+            android:id="@+id/boton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"
@@ -40,6 +42,21 @@
             android:layout_marginVertical="5dp"
             android:layout_gravity="center"
             />
+        <Button
+            android:id="@+id/btnEscuchar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ESCUCHAR"
+            android:onClick="onClick"/>
+
+        <EditText
+            android:id="@+id/etRuta"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="Ruta de la palabra"
+            android:editable="false"
+            />
+
 
     </LinearLayout>
 
