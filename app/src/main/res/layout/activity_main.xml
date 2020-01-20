@@ -34,14 +34,15 @@
 
         <ImageButton
             android:id="@+id/boton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:background="@drawable/ic_launcher_background"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="5dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
-            />
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/microfono"
+            android:maxWidth="65dp"
+            android:maxHeight="65dp"
+            android:src="@mipmap/ic_launcher" />
         <Button
             android:id="@+id/btnEscuchar"
             android:layout_width="match_parent"

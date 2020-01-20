@@ -16,14 +16,17 @@ import android.widget.VideoView;
 import com.traductor.traductorlsc.BaseDeDatos.BDManager;
 import com.traductor.traductorlsc.BaseDeDatos.Utilidades;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity {
 
     VideoView videoView;
     EditText editText, editText2;
     ImageButton imageButton;
     Button button;
-    Object rutaObject;
     BDManager conn;
+    int resID;
+    String resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.btnEscuchar);
 
         //Para poner los videos en el reproductor desde la carpeta RAW
-        rutaObject = R.raw.agosto;
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + rutaObject));
+        resID = getResId("a", R.raw.class);
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + resID));
         videoView.start();
 
-        //registrarDatos();
+        registrarDatos();
     }
 
     private void registrarDatos() {
@@ -58,16 +61,32 @@ public class MainActivity extends AppCompatActivity {
     private void consultar() {
         SQLiteDatabase db = conn.getReadableDatabase();
         String[] parametros = {editText.getText().toString()};
-        String[] campos = {Utilidades.CAMPO_RUTA};
+        String[] campos = {Utilidades.CAMPO_PALABRA};
+        String palabra = editText.getText().toString();
+        String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + " WHERE " + Utilidades.CAMPO_PALABRA + " ='" + palabra + "';";
 
         try {
-            Cursor cursor = db.query(Utilidades.TABLA_VOCABULARIO, campos, Utilidades.CAMPO_ID + "=?", parametros, null, null, null);
+            Cursor cursor = db.rawQuery(query, null);
             cursor.moveToFirst();
+            resultado = cursor.getString(0);
             editText2.setText(cursor.getString(0));
             cursor.close();
+
+            resID = getResId(resultado, R.raw.class);
+            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + resID));
+            videoView.start();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "El documento no existe", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "La palabra no existe dentro de la aplicaciòn", Toast.LENGTH_LONG).show();
             editText2.setText("");
+        }
+    }
+    public static int getResId(String resName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }
