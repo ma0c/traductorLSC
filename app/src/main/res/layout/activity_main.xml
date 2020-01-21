@@ -29,33 +29,29 @@
             android:id="@+id/etPalabra"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:hint="Palabra a traducir"
             />
 
-        <ImageButton
-            android:id="@+id/boton"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
-            android:background="@drawable/microfono"
-            android:maxWidth="65dp"
-            android:maxHeight="65dp"
-            android:src="@mipmap/ic_launcher" />
         <Button
             android:id="@+id/btnEscuchar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ESCUCHAR"
-            android:onClick="onClick"/>
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="120dp"
+            android:background="@drawable/btn_grabar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="120dp" />
+        <!--android:onClick="onClick"-->
 
-        <EditText
-            android:id="@+id/etRuta"
+        <TextView
+            android:id="@+id/tvRuta"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:hint="Ruta de la palabra"
-            android:editable="false"
             />
 
 
