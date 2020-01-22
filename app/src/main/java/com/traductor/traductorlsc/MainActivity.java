@@ -2,6 +2,7 @@ package com.traductor.traductorlsc;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         SQLiteDatabase db = conn.getReadableDatabase();
         String[] parametros = {editText.getText().toString()};
         String[] campos = {Utilidades.CAMPO_PALABRA};
-        String palabra = editText.getText().toString();
+        String palabra = editText.getText().toString().toLowerCase();
         String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + " WHERE " + Utilidades.CAMPO_PALABRA + " ='" + palabra + "';";
 
         try {
@@ -231,5 +232,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     public void onTimeout() {
 
+    }
+
+    public void repetirVideo(View view) {
+        videoView.start();
+    }
+
+    public void traerCategorias(View view) {
+        Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
     }
 }

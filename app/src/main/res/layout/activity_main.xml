@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/llDatos1"
@@ -14,46 +13,87 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginVertical="15dp"
+        android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingTop="20dp"
-        android:orientation="vertical" >
+        android:paddingTop="20dp">
 
         <VideoView
             android:id="@+id/visualizador"
             android:layout_width="350dp"
             android:layout_height="380dp"
-            android:layout_gravity="center">
-        </VideoView>
+            android:layout_gravity="center"></VideoView>
 
-        <EditText
-            android:id="@+id/etPalabra"
-            android:layout_width="370dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:hint="Palabra a traducir"
-            />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRepetir"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:drawable/ic_media_play"
+                android:onClick="repetirVideo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etPalabra"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Palabra a traducir" />
+
+            <Button
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:drawable/ic_search_category_default"
+                android:onClick="onClick" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnEscuchar"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="120dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/btn_grabar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="120dp" />
-        <!--android:onClick="onClick"-->
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/tvRuta"
-            android:layout_width="370dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ruta de la palabra"
-            />
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tvRuta"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:hint="Ruta de la palabra" />
+
+            <Button
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:drawable/ic_search_category_default"
+                android:onClick="traerCategorias" />
+        </LinearLayout>
 
     </LinearLayout>
 
