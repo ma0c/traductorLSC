@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         tts = new TextToSpeech(this, this);
 
-        videoView = (VideoView) findViewById(R.id.visualizador);
-        editText = (EditText) findViewById(R.id.etPalabra);
-        textView = (TextView) findViewById(R.id.tvRuta);
-        button = (Button) findViewById(R.id.btnEscuchar);
+        videoView = findViewById(R.id.visualizador);
+        editText = findViewById(R.id.etPalabra);
+        textView = findViewById(R.id.tvRuta);
+        button = findViewById(R.id.btnEscuchar);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
         //Para poner los videos en el reproductor desde la carpeta RAW
-        resID = getResId("a", R.raw.class);
+        resID = getResId("defecto", R.raw.class);
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + resID));
         videoView.start();
 
@@ -138,16 +138,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private void setupRecognizer(File assetsDir) throws IOException {
         //Esta es la configuración básica, donde se le indican las bibliotecas con las palabras en español
         recognizer = defaultSetup()
-                //.setAcousticModel(new File(assetsDir, "words1.cd_semi_200"))
-                .setAcousticModel(new File(assetsDir, "es-ptm"))
-                //.setDictionary(new File(assetsDir, "words1.dict"))
-                .setDictionary(new File(assetsDir, "es.dict"))
+                .setAcousticModel(new File(assetsDir, "words1"))
+                //.setAcousticModel(new File(assetsDir, "es-ptm"))
+                .setDictionary(new File(assetsDir, "words1.dict"))
+                //.setDictionary(new File(assetsDir, "es.dict"))
                 .getRecognizer();
         recognizer.addListener(this);
 
         //Aquí indicamos el archivo que contiene las palabras clave que queremos reconocer
         // para realizar diferentes acciones. En este caso yo creo un archivo llamado "keys.gram"
-        File keysGrammar = new File(assetsDir, "nivel1.gram");
+        //File keysGrammar = new File(assetsDir, "nivel1.gram");
+        File keysGrammar = new File(assetsDir, "words1.gram");
         recognizer.addKeywordSearch("frases", keysGrammar);
     }
 
