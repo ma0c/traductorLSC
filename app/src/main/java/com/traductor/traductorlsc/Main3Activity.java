@@ -25,7 +25,12 @@ public class Main3Activity extends AppCompatActivity {
 
         Intent as = getIntent();
         Bundle bb = as.getExtras();
-        String categoriaBusqueda = savedInstanceState.getString("categoria");
+        String categoriaBusqueda;
+        if (savedInstanceState != null){
+            categoriaBusqueda = savedInstanceState.getString("categoria");
+        }else{
+            categoriaBusqueda = bb != null ? bb.getString("categoria"):"";
+        }
 
         final ArrayList<String> palabras = new ArrayList<>();
         BDManager conn = new BDManager(getApplicationContext(), Utilidades.NOMBRE_BASEDEDATOS, null, Utilidades.VERSION_BASEDEDATOS);
@@ -57,18 +62,26 @@ public class Main3Activity extends AppCompatActivity {
                 palabra.setBackground(this.getDrawable(R.drawable.btn_default));
             }
 
-            palabra.setTextSize(16);//pequeño 16, mediano 20, grande 24
+            palabra.setTextSize(24);//pequeño 16, mediano 20, grande 24
             palabra.setLayoutParams(lp);
             palabra.setText(palabras.get(i));
             palabra.setId(i);
-            //final int finalI = i;
+            final int finalI = i;
             palabra.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    buscarVideo(palabras.get(finalI));
                 }
             });
             layout.addView(palabra);
         }
+    }
+
+    private void buscarVideo(String palabra) {
+        Intent intent = new Intent(this, Main4Activity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("palabra", palabra);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

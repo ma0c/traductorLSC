@@ -53,7 +53,7 @@ public class Main2Activity extends AppCompatActivity {
                 categoria.setBackground(this.getDrawable(R.drawable.btn_default));
             }
 
-            categoria.setTextSize(16);//pequeño 16, mediano 20, grande 24
+            categoria.setTextSize(24);//pequeño 16, mediano 20, grande 24
             categoria.setLayoutParams(lp);
             categoria.setText(categorias.get(i));
             categoria.setId(i);

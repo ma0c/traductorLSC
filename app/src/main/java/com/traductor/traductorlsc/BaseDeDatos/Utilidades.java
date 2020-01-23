@@ -23,7 +23,7 @@ public class Utilidades {
             +"VALUES"
             +"(001, 'a', 'ABECEDARIO'),"
             +"(002, 'abajo', 'NOCIONES'),"
-            +"(003, 'abril', 'MESES'),"
+            +"(003, 'abril', 'TEMPORALIDAD'),"
             +"(004, 'abuela',	'FAMILIA'),"
             +"(005, 'abuelo', 'FAMILIA'),"
             +"(006, 'aburrido', 'SENTIMIENTOS'),"

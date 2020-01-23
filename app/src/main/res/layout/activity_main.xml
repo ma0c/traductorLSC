@@ -61,18 +61,24 @@
                 android:onClick="onClick" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnEscuchar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/btn_grabar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnEscuchar"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_grabar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,8 +96,8 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:drawable/ic_search_category_default"
+                android:layout_marginTop="5dp"
+                android:background="@android:drawable/ic_menu_sort_by_size"
                 android:onClick="traerCategorias" />
         </LinearLayout>
 

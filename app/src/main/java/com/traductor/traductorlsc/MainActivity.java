@@ -1,6 +1,5 @@
 package com.traductor.traductorlsc;
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
@@ -105,9 +104,18 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private void consultar() {
         SQLiteDatabase db = conn.getReadableDatabase();
-        String[] parametros = {editText.getText().toString()};
-        String[] campos = {Utilidades.CAMPO_PALABRA};
-        String palabra = editText.getText().toString().toLowerCase();
+
+        String palabra;
+        String previoPalabra = editText.getText().toString().toLowerCase();
+        if(previoPalabra.equals("papá")) palabra = "papaa";
+        else if (previoPalabra.contains("ñ")) palabra = previoPalabra.replace("ñ", "nn");
+        else if (previoPalabra.contains("á")) palabra = previoPalabra.replace("á", "a");
+        else if (previoPalabra.contains("é")) palabra = previoPalabra.replace("é", "e");
+        else if (previoPalabra.contains("í")) palabra = previoPalabra.replace("í", "i");
+        else if (previoPalabra.contains("ó")) palabra = previoPalabra.replace("ó", "o");
+        else if (previoPalabra.contains("ú")) palabra = previoPalabra.replace("ú", "u");
+        else palabra = editText.getText().toString().toLowerCase();
+
         String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + " WHERE " + Utilidades.CAMPO_PALABRA + " ='" + palabra + "';";
 
         try {
