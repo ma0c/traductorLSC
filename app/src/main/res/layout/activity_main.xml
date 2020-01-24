@@ -15,7 +15,7 @@
         android:layout_marginVertical="15dp"
         android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <VideoView
             android:id="@+id/visualizador"
@@ -65,38 +65,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btnEscuchar"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_grabar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvRuta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:hint="" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
+
 
             <TextView
-                android:id="@+id/tvRuta"
-                android:layout_width="320dp"
+                android:id="@+id/tvCategorias"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Ruta de la palabra" />
+                android:text="CATEGORIAS"
+                android:textSize="27dp"
+                android:textColor="#000000"/>
 
             <Button
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="2dp"
                 android:background="@android:drawable/ic_menu_sort_by_size"
                 android:onClick="traerCategorias" />
         </LinearLayout>

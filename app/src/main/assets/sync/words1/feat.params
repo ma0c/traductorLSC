@@ -5,5 +5,5 @@
 -lifter 22
 -feat s2_4x
 -agc none
--cmn batch
+-cmn current
 -varnorm no

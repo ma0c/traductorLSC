@@ -153,7 +153,7 @@ public class Utilidades {
             +"(130, 'f', 'ABECEDARIO'),"
             +"(131, 'facebook', 'TECNOLOGIA'),"
             +"(132, 'falda', 'PRENDAS'),"
-            +"(133, 'Familia', 'FAMILIA'),"
+            +"(133, 'familia', 'FAMILIA'),"
             +"(134, 'febrero', 'TEMPORALIDAD'),"
             +"(135, 'feliz', 'SENTIMIENTOS'),"
             +"(136, 'feo', 'NOCIONES'),"
@@ -292,7 +292,7 @@ public class Utilidades {
             +"(269, 'pera', 'FRUTAS'),"
             +"(270, 'periodista', 'PROFESIONES'),"
             +"(271, 'perro', 'ANIMALES'),"
-            +"(272, 'perro Caliente', 'ALIMENTOS'),"
+            +"(272, 'perrocaliente', 'ALIMENTOS'),"
             +"(273, 'persona', 'FAMILIA'),"
             +"(274, 'pescado', 'ALIMENTOS'),"
             +"(275, 'pez', 'ANIMALES'),"
@@ -345,10 +345,10 @@ public class Utilidades {
             +"(322, 'supermercado', 'LUGARES'),"
             +"(323, 't', 'ABECEDARIO'),"
             +"(324, 'tarde', 'TEMPORALIDAD'),"
-            +"(325, 'te amo', 'SENTIMIENTOS'),"
+            +"(325, 'teamo', 'SENTIMIENTOS'),"
             +"(326, 'teclado', 'TECNOLOGIA'),"
             +"(327, 'television', 'TECNOLOGIA'),"
-            +"(328, 'ten', 'TRANSPORTE'),"
+            +"(328, 'tren', 'TRANSPORTE'),"
             +"(329, 'tia', 'FAMILIA'),"
             +"(330, 'tiburon', 'ANIMALES'),"
             +"(331, 'tigre', 'ANIMALES'),"
@@ -378,6 +378,6 @@ public class Utilidades {
             +"(355, 'z', 'ABECEDARIO'),"
             +"(356, 'zanahoria', 'VERDURAS'),"
             +"(357, 'zapato', 'PRENDAS'),"
-            +"(358, 'zoologico', 'LUGARES')";
-
+            +"(358, 'zoologico', 'LUGARES'),"
+            +"(359, 'o', 'ABECEDARIO')";
 }

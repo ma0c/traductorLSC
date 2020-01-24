@@ -1,7 +1,9 @@
 package com.traductor.traductorlsc;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.traductor.traductorlsc.BaseDeDatos.BDManager;
 import com.traductor.traductorlsc.BaseDeDatos.Utilidades;
@@ -24,6 +28,7 @@ import com.traductor.traductorlsc.BaseDeDatos.Utilidades;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import edu.cmu.pocketsphinx.Assets;
@@ -34,17 +39,21 @@ import static edu.cmu.pocketsphinx.SpeechRecognizerSetup.defaultSetup;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, edu.cmu.pocketsphinx.RecognitionListener {
 
-    VideoView videoView;
-    EditText editText;
-    TextView textView;
-    Button button;
-    BDManager conn;
-    int resID;
-    String resultado;
+    private VideoView videoView;
+    private EditText editText;
+    private TextView textView;
+    private Button button;
+    private BDManager conn;
+    private int resID;
+    private String resultado;
 
-    TextToSpeech tts;
+    private TextToSpeech tts;
     private SpeechRecognizer recognizer;
-    String text;
+    private String text;
+    private ArrayList<String> palabras;
+    private boolean acierto;
+
+    private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -52,11 +61,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+        String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_RECORD_AUDIO);
+            return;
+        }
+
         tts = new TextToSpeech(this, this);
 
         videoView = findViewById(R.id.visualizador);
         editText = findViewById(R.id.etPalabra);
         textView = findViewById(R.id.tvRuta);
+        //textView.setVisibility(View.GONE);
         button = findViewById(R.id.btnEscuchar);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -89,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         videoView.start();
 
         registrarDatos();
+        obtenerPalabras();
     }
 
     private void registrarDatos() {
@@ -103,35 +121,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     private void consultar() {
-        SQLiteDatabase db = conn.getReadableDatabase();
-
         String palabra;
         String previoPalabra = editText.getText().toString().toLowerCase();
-        if(previoPalabra.equals("papá")) palabra = "papaa";
-        else if (previoPalabra.contains("ñ")) palabra = previoPalabra.replace("ñ", "nn");
-        else if (previoPalabra.contains("á")) palabra = previoPalabra.replace("á", "a");
-        else if (previoPalabra.contains("é")) palabra = previoPalabra.replace("é", "e");
-        else if (previoPalabra.contains("í")) palabra = previoPalabra.replace("í", "i");
-        else if (previoPalabra.contains("ó")) palabra = previoPalabra.replace("ó", "o");
-        else if (previoPalabra.contains("ú")) palabra = previoPalabra.replace("ú", "u");
+        if (previoPalabra.equals("papá")) previoPalabra = "papaa";
+        if (previoPalabra.contains(" ")) previoPalabra = previoPalabra.replace(" ", "");
+        if (previoPalabra.contains("á")) previoPalabra = previoPalabra.replace("á", "a");
+        if (previoPalabra.contains("ñ")) previoPalabra = previoPalabra.replace("ñ", "nn");
+        if (previoPalabra.contains("é")) previoPalabra = previoPalabra.replace("é", "e");
+        if (previoPalabra.contains("í")) previoPalabra = previoPalabra.replace("í", "i");
+        if (previoPalabra.contains("ó")) previoPalabra = previoPalabra.replace("ó", "o");
+        if (previoPalabra.contains("ú")) previoPalabra = previoPalabra.replace("ú", "u");
         else palabra = editText.getText().toString().toLowerCase();
+        palabra = previoPalabra;
 
-        String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + " WHERE " + Utilidades.CAMPO_PALABRA + " ='" + palabra + "';";
-
-        try {
-            Cursor cursor = db.rawQuery(query, null);
-            cursor.moveToFirst();
-            resultado = cursor.getString(0);
-            textView.setText(cursor.getString(0));
-            cursor.close();
-
-            resID = getResId(resultado, R.raw.class);
-            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + resID));
-            videoView.start();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "La palabra no existe dentro de la aplicaciòn", Toast.LENGTH_LONG).show();
-            textView.setText("");
-        }
+        buscarVideo(palabra);
     }
 
     public static int getResId(String resName, Class<?> c) {
@@ -201,40 +204,40 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         //Obtenemos el String de la Hypothesiss
 
         text = hypothesis.getHypstr();
+        Log.e("Texto parcial", "Aux " + text);
 
         //Reiniciamos el reconocedor, de esta forma reconoce voz de forma continua y limpia el buffer
-        resetRecognizer();
+        //resetRecognizer();
     }
 
     @Override
     public void onResult(Hypothesis hypothesis) {
-        Log.e("Tecto", "Aux " + text);
-        text = "";
-        /*if(text != null){
-            for(int i=0;i<listado.size();i++){
-                if(palabra.getNombre().contains(listado.get(i).split(";")[1])) {
-                    if (text.contains(listado.get(i).split(";")[0]))
-                        acierto = true;
+        Log.e("Texto Resultado", "Aux " + text);
+        if (text != null) {
+            text = text.replace(" ", "");
+            for (int i = 0; i < palabras.size(); i++) {
+                //System.out.println("Si " + palabras.get(i) + " contiene " + text + " > " + palabras.get(i).contains(text));
+                if (palabras.get(i).contains(text)) {
+                    acierto = true;
                 }
             }
-        }else {
+        } else {
             acierto = false;
+            editText.setText("");
         }
 
-        TextView textView = (TextView) findViewById(R.id.textView_escuchaN1);
-        if(acierto){
-            textView.setText("¡¡Dijiste la palabra!!");
-            palabraReconocida();
-        }else{
-            textView.setText("¡Vuelve a intentarlo!");
+        if (acierto) {
+            editText.setText(text);
+            buscarVideo(text);
+        } else {
+            textView.setText("¡Intentalo de nuevo!");
         }
-        text=null;
-        acierto=false;*/
+        text = null;
+        acierto = false;
     }
 
     @Override
     public void onError(Exception e) {
-
     }
 
     @Override
@@ -249,5 +252,46 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void traerCategorias(View view) {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
+    }
+
+    public void buscarVideo(String palabra) {
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + " WHERE " + Utilidades.CAMPO_PALABRA + " ='" + palabra + "';";
+
+        try {
+            Cursor cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            resultado = cursor.getString(0);
+            //textView.setText(cursor.getString(0));
+            cursor.close();
+
+            resID = getResId(resultado, R.raw.class);
+            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + resID));
+            videoView.start();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "La palabra no existe dentro de la aplicación", Toast.LENGTH_LONG).show();
+            textView.setText("");
+        }
+    }
+
+    public void obtenerPalabras() {
+        palabras = new ArrayList<>();
+        BDManager conn = new BDManager(getApplicationContext(), Utilidades.NOMBRE_BASEDEDATOS, null, Utilidades.VERSION_BASEDEDATOS);
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String query = "SELECT " + Utilidades.CAMPO_PALABRA + " FROM " + Utilidades.TABLA_VOCABULARIO + ";";
+
+        if (db != null) {
+            db.beginTransaction();
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                do {
+                    palabras.add(c.getString(0));
+                } while (c.moveToNext());
+            }
+            c.close();
+            db.setTransactionSuccessful();
+            db.endTransaction();
+        }
+        conn.close();
     }
 }
