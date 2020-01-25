@@ -160,8 +160,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         //Aquí indicamos el archivo que contiene las palabras clave que queremos reconocer
         // para realizar diferentes acciones. En este caso yo creo un archivo llamado "keys.gram"
         //File keysGrammar = new File(assetsDir, "nivel1.gram");
-        File keysGrammar = new File(assetsDir, "words1.gram");
-        recognizer.addKeywordSearch("frases", keysGrammar);
+        //File keysGrammar = new File(assetsDir, "words1.gram");
+        File languageModel = new File(assetsDir, "words1.lm");
+        recognizer.addNgramSearch("frases", languageModel);
     }
 
     @Override
